@@ -27,7 +27,7 @@ allure {
 
 dependencies {
     testImplementation(
-            "com.codeborne:selenide:7.6.0",
+            "com.codeborne:selenide:6.13.0",
             "io.github.bonigarcia:webdrivermanager:6.0.1",
             "io.qameta.allure:allure-selenide:$allureVersion",
             "io.appium:java-client:8.3.0",
