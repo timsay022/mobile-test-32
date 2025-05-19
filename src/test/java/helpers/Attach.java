@@ -1,5 +1,6 @@
 package helpers;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -9,25 +10,25 @@ import java.nio.charset.StandardCharsets;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public class Attach {
-    @Attachment(value = "{attachName}", type = "image/png")
-    public static byte[] screenshotAs(String attachName) {
-        return ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.BYTES);
+
+    public static void screenshotAs(String attachName) {
+        byte[] screenshot = ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.BYTES);
+        Allure.addAttachment(attachName, "image/png", new String(screenshot, StandardCharsets.ISO_8859_1));
     }
 
-    @Attachment(value = "Page source", type = "text/plain")
-    public static byte[] pageSource() {
-        return getWebDriver().getPageSource().getBytes(StandardCharsets.UTF_8);
+    public static void pageSource() {
+        String pageSource = getWebDriver().getPageSource();
+        Allure.addAttachment("Page source", "text/plain", pageSource, ".txt");
     }
 
-    @Attachment(value = "{attachName}", type = "text/plain")
-    public static String attachAsText(String attachName, String message) {
-        return message;
+    public static void attachAsText(String attachName, String message) {
+        Allure.addAttachment(attachName, "text/plain", message, ".txt");
     }
 
-    @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
-    public static String addVideo(String sessionId) {
-        return "<html><body><video width='100%' height='100%' controls autoplay><source src='"
+    public static void addVideo(String sessionId) {
+        String html = "<html><body><video width='100%' height='100%' controls autoplay><source src='"
                 + Browserstack.videoUrl(sessionId)
                 + "' type='video/mp4'></video></body></html>";
+        Allure.addAttachment("Video", "text/html", html, ".html");
     }
 }

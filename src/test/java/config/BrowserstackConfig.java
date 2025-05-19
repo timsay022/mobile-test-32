@@ -1,11 +1,13 @@
 package config;
 
+
 import org.aeonbits.owner.Config;
 
 @Config.Sources({"classpath:android.properties"})
 public interface BrowserstackConfig extends Config {
 
     @Key("app")
+    @DefaultValue("bs://sample.app")
     String app();
 
     @Key("device")
